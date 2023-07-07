@@ -4,6 +4,7 @@ export const Button = styled.button`
   ${({ theme, color }) => css`
     width: 100%;
     height: 38px;
+    padding: 0 1rem;
 
     gap: 1rem;
     display: flex;

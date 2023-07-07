@@ -21,7 +21,6 @@ export function Login() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log('data', data);
     setIsLoading(true);
     try {
       setErrorMessage('');

@@ -23,5 +23,16 @@ export const GlobalStyles = createGlobalStyle`
     .error-message {
       color: ${theme.red};
     }
+
+    .content {
+      display: flex;
+
+      > div {
+        flex: 1;
+        margin: 0 auto;
+        max-width: 1280px;
+        padding: 2rem 1rem;
+      }
+    }
   `}
 `;
