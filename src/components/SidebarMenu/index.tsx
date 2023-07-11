@@ -11,14 +11,28 @@ import {
 import { useState } from 'react';
 
 export function SidebarMenu() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(
+    localStorage.getItem('menuIsOpen') === 'open'
+  );
+
+  const togle = () => {
+    const isOpen = localStorage.getItem('menuIsOpen');
+
+    if (isOpen === 'open') {
+      setOpen(false);
+      localStorage.setItem('menuIsOpen', 'close');
+    } else {
+      setOpen(true);
+      localStorage.setItem('menuIsOpen', 'open');
+    }
+  };
 
   return (
     <S.Container open={open}>
       <nav>
         <div className='title'>
           <ul>
-            <li onClick={() => setOpen(!open)}>
+            <li onClick={togle}>
               <a href='#'>
                 <Menu />
                 <span>Menu</span>

@@ -7,8 +7,10 @@ export const Container = styled.header`
     align-items: center;
     justify-content: space-between;
 
-    h2 {
+    h2,
+    p {
       margin-bottom: 0.5rem;
+      color: ${theme.text};
     }
 
     button {

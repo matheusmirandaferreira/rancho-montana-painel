@@ -40,19 +40,27 @@ export function Routes() {
   return (
     <BrowserRouter>
       <RoutesWrapper>
-        {(isAuthenticated ? appRoutes : authRoutes).map((route) => (
-          <Route
-            key={route.path}
-            path={route.path}
-            element={
-              <div className='content'>
-                <SidebarMenu />
+        {isAuthenticated
+          ? appRoutes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={
+                  <div className='content'>
+                    <SidebarMenu />
 
-                {route.element}
-              </div>
-            }
-          />
-        ))}
+                    {route.element}
+                  </div>
+                }
+              />
+            ))
+          : authRoutes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={route.element}
+              />
+            ))}
       </RoutesWrapper>
     </BrowserRouter>
   );

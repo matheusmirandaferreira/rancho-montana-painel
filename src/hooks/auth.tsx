@@ -9,6 +9,7 @@ import { UserProps } from '../libs/user';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { compareAsc } from 'date-fns';
 import { paths } from '../routes';
+import { api } from '../services/api';
 
 type ContextProps = Partial<UserProps> & {
   isAuthenticated: boolean;
@@ -28,6 +29,7 @@ export const AuthProvider: React.FC<{ children: JSX.Element }> = ({
   const onLoginSuccess = useCallback(async (props: UserProps) => {
     setUser(props);
     localStorage.setItem('user', JSON.stringify(props));
+    api.defaults.headers.common.Authorization = `Bearer ${props.token}`;
   }, []);
 
   useEffect(() => {
@@ -40,6 +42,7 @@ export const AuthProvider: React.FC<{ children: JSX.Element }> = ({
 
         if (compareAsc(Number(exp) * 1000, new Date()) === 1) {
           setUser(userObj);
+          api.defaults.headers.common.Authorization = `Bearer ${userObj.token}`;
         } else {
           localStorage.clear();
           window.location.replace(paths.login);
