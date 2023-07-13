@@ -3,7 +3,7 @@ import * as S from './styles';
 
 type Props = {
   title: string;
-  description: string;
+  description?: string;
   children?: ReactNode;
 };
 
@@ -13,7 +13,7 @@ export function PageHeader(props: Props) {
     <S.Container>
       <div>
         <h2>{title}</h2>
-        <p>{description}</p>
+        {description && <p>{description}</p>}
       </div>
       {children}
     </S.Container>

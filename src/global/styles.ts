@@ -13,6 +13,7 @@ export const GlobalStyles = createGlobalStyle`
     body {
       font: normal 500 16px/18px 'Montserrat', sans-serif;
       color: ${theme.text};
+      background-color: ${theme.background};
     }
 
     button,

@@ -14,5 +14,7 @@ export const Button = styled.button`
     color: ${theme.white};
     border-radius: 0.25rem;
     background-color: ${theme[color || 'primary700']};
+
+    cursor: pointer;
   `}
 `;

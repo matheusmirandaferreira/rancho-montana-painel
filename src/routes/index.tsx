@@ -9,11 +9,13 @@ import { useAuth } from '../hooks/auth';
 import { Home } from '../pages/Home';
 import { Color } from '../pages/Color';
 import { SidebarMenu } from '../components/SidebarMenu';
+import { ColorDetails } from '../pages/ColorDetails';
 
 export const paths = {
   login: '/login',
   home: '/',
   color: '/color',
+  colorDetails: '/color/:uuid',
 };
 
 export function Routes() {
@@ -34,6 +36,10 @@ export function Routes() {
     {
       path: paths.color,
       element: <Color />,
+    },
+    {
+      path: paths.colorDetails,
+      element: <ColorDetails />,
     },
   ];
 

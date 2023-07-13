@@ -12,6 +12,8 @@ import { getColors } from '../../services/color';
 import { GetColorsResponse } from '../../libs/color';
 
 import * as S from './styles';
+import { Link } from 'react-router-dom';
+import { paths } from '../../routes';
 
 export function Color() {
   const { data, error, isLoading } = useQuery<GetColorsResponse, any>({
@@ -23,9 +25,21 @@ export function Color() {
     return <Loader.Page />;
   }
 
-  if (error) {
+  if (error || !data) {
     return <ErrorMessage message={error.response.data.error} />;
   }
+
+  const rows = data.data.map((item, index) => (
+    <Fragment key={index}>
+      <td>
+        <Link to={paths.colorDetails.replace(':uuid', item.uuidcolor)}>
+          {item.nmcolor}
+        </Link>
+      </td>
+      <td>{item.color_permalink}</td>
+      <td>{new Date(item.created_at).toLocaleString()}</td>
+    </Fragment>
+  ));
 
   return (
     <S.Container>
@@ -40,16 +54,8 @@ export function Color() {
       </PageHeader>
 
       <Table
-        headerColumns={['Nome', 'Código', '']}
-        rows={
-          data?.data.map((item, index) => (
-            <Fragment key={index}>
-              <td>{item.nmcolor}</td>
-              <td>{item.color_permalink}</td>
-              <td>{new Date(item.created_at).toLocaleString()}</td>
-            </Fragment>
-          )) || []
-        }
+        headerColumns={['Nome', 'Código', 'Data de criação']}
+        rows={rows}
       />
     </S.Container>
   );
