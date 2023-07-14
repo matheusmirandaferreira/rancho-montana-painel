@@ -26,6 +26,14 @@ export const GlobalStyles = createGlobalStyle`
       color: ${theme.red};
     }
 
+    .row {
+      gap: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
     .content {
       display: flex;
 
