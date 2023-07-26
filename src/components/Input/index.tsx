@@ -8,10 +8,12 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
   name: string;
   rules?: RegisterOptions;
+  errorMessage?: string;
 };
 
 export function Input(props: Props) {
-  const { label, control, name, defaultValue, rules, ...rest } = props;
+  const { label, control, name, defaultValue, rules, errorMessage, ...rest } =
+    props;
 
   const {
     field,
@@ -22,7 +24,9 @@ export function Input(props: Props) {
     <S.Container>
       <label htmlFor={name}>{label}</label>
       <input {...rest} {...field} id={name} />
-      {error?.message && <p className='error-message'>{error.message}</p>}
+      {(error?.message || errorMessage) && (
+        <p className='error-message'>{error?.message || errorMessage}</p>
+      )}
     </S.Container>
   );
 }

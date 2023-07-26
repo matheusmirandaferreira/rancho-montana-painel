@@ -16,10 +16,16 @@ export const GlobalStyles = createGlobalStyle`
       background-color: ${theme.background};
     }
 
-    button,
-    input,
-    input::placeholder {
-      font: normal 400 14px/16px 'Montserrat', sans-serif;
+    button {
+      font: normal 500 14px/16px 'Montserrat', sans-serif;
+    }
+
+    input {
+      font: normal 600 14px/16px 'Montserrat', sans-serif;
+
+      &::placeholder {
+        font-weight: 400;
+      }
     }
 
     .error-message {

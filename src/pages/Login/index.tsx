@@ -11,6 +11,7 @@ import { login } from '../../services/auth';
 import { SignInProps } from '../../libs/user';
 
 import * as S from './styles';
+import { paths } from '../../routes';
 
 export function Login() {
   const theme = useTheme();
@@ -27,6 +28,7 @@ export function Login() {
       const res = await login(data);
       if (res.status === '00') {
         onLoginSuccess(res.data);
+        window.location.replace(paths.home);
       } else {
         setErrorMessage(res.message);
       }

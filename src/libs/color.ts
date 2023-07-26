@@ -11,3 +11,5 @@ export type ColorListProps = {
 export type GetColorsResponse = ResponseProps<ColorListProps[]>;
 
 export type GetColorDetailsResponse = ResponseProps<ColorListProps>;
+
+export type UpdateColorResponse = ResponseProps<ColorListProps>;
