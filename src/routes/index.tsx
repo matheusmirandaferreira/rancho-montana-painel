@@ -10,12 +10,15 @@ import { Home } from '../pages/Home';
 import { Color } from '../pages/Color';
 import { SidebarMenu } from '../components/SidebarMenu';
 import { ColorDetails } from '../pages/ColorDetails';
+import { Pace } from '../pages/Pace';
 
 export const paths = {
   login: '/login',
   home: '/',
   color: '/color',
   colorDetails: '/color/:uuid',
+  pace: '/pace',
+  paceDetails: '/pace/:uuid',
 };
 
 export function Routes() {
@@ -40,6 +43,10 @@ export function Routes() {
     {
       path: paths.colorDetails,
       element: <ColorDetails />,
+    },
+    {
+      path: paths.pace,
+      element: <Pace />,
     },
   ];
 

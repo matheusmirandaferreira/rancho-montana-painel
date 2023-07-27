@@ -14,39 +14,37 @@ import { ErrorMessage } from '../../components/ErrorMessage';
 import { PageContainer } from '../../components/PageContainer';
 
 import { paths } from '../../routes';
-import { createColor, getColors } from '../../services/color';
+import { createPace, getPaces } from '../../services/pace';
 import {
-  ColorListProps,
-  CreateColorResponse,
-  GetColorsResponse,
-} from '../../libs/color';
+  PaceListProps,
+  CreatePaceResponse,
+  GetPacesResponse,
+} from '../../libs/pace';
 
-export function Color() {
+export function Pace() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data, error, isLoading, ...query } = useQuery<GetColorsResponse, any>(
-    {
-      queryKey: ['GET_COLORS'],
-      queryFn: getColors,
-    }
-  );
+  const { data, error, isLoading, ...query } = useQuery<GetPacesResponse, any>({
+    queryKey: ['GET_PACES'],
+    queryFn: getPaces,
+  });
 
-  const mutation = useMutation<CreateColorResponse, any, string>({
-    mutationFn: createColor,
+  const mutation = useMutation<CreatePaceResponse, any, string>({
+    mutationFn: createPace,
     onSuccess() {
       handleModal();
       query.refetch();
     },
   });
 
-  const { control, handleSubmit } = useForm<Pick<ColorListProps, 'nmcolor'>>();
+  const { control, handleSubmit } = useForm<Pick<PaceListProps, 'nmpace'>>();
 
   const handleModal = () => {
     setIsOpen(!isOpen);
   };
 
   const onSubmit = handleSubmit((data) => {
-    mutation.mutate(data.nmcolor);
+    mutation.mutate(data.nmpace);
   });
 
   if (isLoading) {
@@ -60,11 +58,11 @@ export function Color() {
   const rows = data.data.map((item, index) => (
     <Fragment key={index}>
       <td>
-        <Link to={paths.colorDetails.replace(':uuid', item.uuidcolor)}>
-          {item.nmcolor}
+        <Link to={paths.paceDetails.replace(':uuid', item.uuidpace)}>
+          {item.nmpace}
         </Link>
       </td>
-      <td>{item.color_permalink}</td>
+      <td>{item.pace_permalink}</td>
       <td>{new Date(item.created_at).toLocaleString()}</td>
     </Fragment>
   ));
@@ -72,8 +70,8 @@ export function Color() {
   return (
     <PageContainer>
       <PageHeader
-        title='Cores'
-        description='Gerencie as cores que serão vinculadas aos cavalos.'
+        title='Andamentos'
+        description='Gerencie os andamentos que serão vinculadas aos cavalos.'
       >
         <Button onClick={handleModal}>
           <AddOutlined />
@@ -87,7 +85,7 @@ export function Color() {
       />
 
       <Modal
-        title='Adicinoar cor'
+        title='Adicinoao andamento'
         onClose={handleModal}
         onConfirm={onSubmit}
         isOpen={isOpen}
@@ -95,8 +93,8 @@ export function Color() {
       >
         <Input
           control={control}
-          name='nmcolor'
-          label='Nome da cor'
+          name='nmpace'
+          label='Nome do andamento'
           placeholder='Nome'
           rules={{ required: 'Campo obrigatório!' }}
           errorMessage={mutation.error?.response?.data.message}

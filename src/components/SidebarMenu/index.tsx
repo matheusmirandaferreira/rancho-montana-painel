@@ -85,7 +85,7 @@ export function SidebarMenu() {
             </a>
           </li>
           <li>
-            <a href='#'>
+            <a href={paths.pace}>
               <EqualizerOutlined />
               <span>Andamento</span>
             </a>
