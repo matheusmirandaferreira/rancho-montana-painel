@@ -33,6 +33,10 @@ export function ColorDetails() {
     Partial<ColorListProps>
   >({
     mutationFn: updateColor,
+    onSuccess() {
+      handleModal();
+      query.refetch();
+    },
   });
 
   const { ...query } = useQuery<GetColorDetailsResponse, any>({
@@ -40,13 +44,8 @@ export function ColorDetails() {
     queryFn: () => getColorDetails(uuid),
   });
 
-  const { control, handleSubmit } = useForm<
-    Pick<ColorListProps, 'nmcolor' | 'uuidcolor'>
-  >({
-    defaultValues: {
-      nmcolor: query.data?.data.nmcolor,
-    },
-  });
+  const { control, handleSubmit } =
+    useForm<Pick<ColorListProps, 'nmcolor' | 'uuidcolor'>>();
 
   const handleModal = () => {
     setIsOpen(!isOpen);
@@ -95,13 +94,16 @@ export function ColorDetails() {
         onClose={handleModal}
         onConfirm={onSubmit}
         isOpen={isOpen}
+        isLoading={mutation.isLoading}
       >
         <Input
           control={control}
+          defaultValue={query.data.data.nmcolor}
           name='nmcolor'
           label='Nome da cor'
           placeholder='Nome'
           rules={{ required: 'Campo obrigatório!' }}
+          errorMessage={mutation.error?.response?.data.message}
         />
       </Modal>
     </S.Container>

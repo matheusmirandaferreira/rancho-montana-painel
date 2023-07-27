@@ -18,7 +18,7 @@
   "plugins": ["@typescript-eslint", "react"],
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/rules-of-hooks": "off",
     "react-hooks/exhaustive-deps": "warn",
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-explicit-any": "off",

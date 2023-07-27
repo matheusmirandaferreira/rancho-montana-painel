@@ -4,12 +4,14 @@ import { CloseOutlined } from '@mui/icons-material';
 import { Button } from '../Button';
 
 import * as S from './styles';
+import { Loader } from '../Loader';
 
 type Props = {
   title: string;
   children?: ReactNode;
 
   isOpen?: boolean;
+  isLoading?: boolean;
   onClose(): void;
 
   onConfirm(): void;
@@ -17,7 +19,8 @@ type Props = {
 };
 
 export function Modal(props: Props) {
-  const { title, children, isOpen, onClose, onConfirm, onCancel } = props;
+  const { title, children, isOpen, onClose, onConfirm, onCancel, isLoading } =
+    props;
 
   if (!isOpen) return <></>;
 
@@ -33,7 +36,13 @@ export function Modal(props: Props) {
           <Button onClick={onCancel || onClose} color='gray700'>
             Cancelar
           </Button>
-          <Button onClick={onConfirm}>Confirmar</Button>
+          <Button onClick={onConfirm} disabled={isLoading}>
+            {isLoading ? (
+              <Loader.Spinner width={20} height={20} color='#fff' />
+            ) : (
+              'Confirmar'
+            )}
+          </Button>
         </div>
       </div>
     </S.Container>
