@@ -13,3 +13,5 @@ export type GetColorsResponse = ResponseProps<ColorListProps[]>;
 export type GetColorDetailsResponse = ResponseProps<ColorListProps>;
 
 export type UpdateColorResponse = ResponseProps<ColorListProps>;
+
+export type CreateColorResponse = ResponseProps<ColorListProps>;

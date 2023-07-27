@@ -1,24 +1,53 @@
-import { Fragment } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { Fragment, useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { AddOutlined } from '@mui/icons-material';
 
 import { Table } from '../../components/Table';
+import { Input } from '../../components/Input';
+import { Modal } from '../../components/Modal';
 import { Loader } from '../../components/Loader';
 import { Button } from '../../components/Button';
 import { PageHeader } from '../../components/PageHeader';
 import { ErrorMessage } from '../../components/ErrorMessage';
 
-import { getColors } from '../../services/color';
-import { GetColorsResponse } from '../../libs/color';
+import { paths } from '../../routes';
+import { createColor, getColors } from '../../services/color';
+import {
+  ColorListProps,
+  CreateColorResponse,
+  GetColorsResponse,
+} from '../../libs/color';
 
 import * as S from './styles';
-import { Link } from 'react-router-dom';
-import { paths } from '../../routes';
 
 export function Color() {
-  const { data, error, isLoading } = useQuery<GetColorsResponse, any>({
-    queryKey: ['GET_COLORS'],
-    queryFn: getColors,
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { data, error, isLoading, ...query } = useQuery<GetColorsResponse, any>(
+    {
+      queryKey: ['GET_COLORS'],
+      queryFn: getColors,
+    }
+  );
+
+  const mutation = useMutation<CreateColorResponse, any, string>({
+    mutationFn: createColor,
+    onSuccess() {
+      handleModal();
+      query.refetch();
+    },
+  });
+
+  const { control, handleSubmit } = useForm<Pick<ColorListProps, 'nmcolor'>>();
+
+  const handleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const onSubmit = handleSubmit((data) => {
+    mutation.mutate(data.nmcolor);
   });
 
   if (isLoading) {
@@ -47,7 +76,7 @@ export function Color() {
         title='Cores'
         description='Gerencie as cores que serão vinculadas aos cavalos.'
       >
-        <Button>
+        <Button onClick={handleModal}>
           <AddOutlined />
           <span>Adicionar</span>
         </Button>
@@ -57,6 +86,23 @@ export function Color() {
         headerColumns={['Nome', 'Código', 'Data de criação']}
         rows={rows}
       />
+
+      <Modal
+        title='Adicinoar cor'
+        onClose={handleModal}
+        onConfirm={onSubmit}
+        isOpen={isOpen}
+        isLoading={mutation.isLoading}
+      >
+        <Input
+          control={control}
+          name='nmcolor'
+          label='Nome da cor'
+          placeholder='Nome'
+          rules={{ required: 'Campo obrigatório!' }}
+          errorMessage={mutation.error?.response?.data.message}
+        />
+      </Modal>
     </S.Container>
   );
 }

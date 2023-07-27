@@ -17,7 +17,7 @@ export const Container = styled.div`
       top: 50%;
       transform: translate(-50%, -50%);
 
-      border-radius: 1rem;
+      border-radius: 0.875rem;
       background-color: ${theme.white};
       box-shadow: 0 0 0.25rem ${theme.primary500};
     }

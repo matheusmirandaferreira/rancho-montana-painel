@@ -27,3 +27,9 @@ export async function updateColor(params: Partial<ColorListProps>) {
 
   return data;
 }
+
+export async function createColor(nmcolor: string) {
+  const { data } = await api.post('/api/color', { nmcolor });
+
+  return data;
+}
