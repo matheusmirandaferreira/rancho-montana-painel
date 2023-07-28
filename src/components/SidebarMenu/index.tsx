@@ -1,4 +1,3 @@
-import { Outlet } from 'react-router-dom';
 import { paths } from '../../routes';
 import * as S from './styles';
 import {
@@ -42,7 +41,7 @@ export function SidebarMenu() {
         </div>
         <ul>
           <li>
-            <a href='#'>
+            <a href={paths.horse}>
               <svg
                 width='24'
                 height='24'
@@ -79,7 +78,7 @@ export function SidebarMenu() {
             </a>
           </li>
           <li>
-            <a href='#'>
+            <a href={paths.race}>
               <PetsOutlined />
               <span>Raça</span>
             </a>
@@ -98,7 +97,6 @@ export function SidebarMenu() {
           </li>
         </ul>
       </nav>
-      <Outlet />
     </S.Container>
   );
 }

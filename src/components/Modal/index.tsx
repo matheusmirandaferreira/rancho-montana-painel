@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { CloseOutlined } from '@mui/icons-material';
 
 import { Button } from '../Button';
@@ -23,6 +23,19 @@ export function Modal(props: Props) {
     props;
 
   if (!isOpen) return <></>;
+
+  useEffect(() => {
+    const keyDownHandler = (event: KeyboardEvent) => {
+      if (event.key === 'Enter') onConfirm();
+      if (event.key === 'Escape') onClose();
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, [onClose, onConfirm]);
 
   return (
     <S.Container>

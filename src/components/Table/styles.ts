@@ -20,9 +20,18 @@ export const Container = styled.table`
 
     thead {
       background-color: ${theme.background};
+    }
 
-      tr th {
+    tr th,
+    tr td {
+      text-align: center;
+
+      &:first-child {
         text-align: left;
+      }
+
+      &:last-child {
+        text-align: right;
       }
     }
 

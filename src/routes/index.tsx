@@ -1,5 +1,6 @@
 import {
   BrowserRouter,
+  Outlet,
   Route,
   RouteProps,
   Routes as RoutesWrapper,
@@ -11,6 +12,10 @@ import { Color } from '../pages/Color';
 import { SidebarMenu } from '../components/SidebarMenu';
 import { ColorDetails } from '../pages/ColorDetails';
 import { Pace } from '../pages/Pace';
+import { Race } from '../pages/Race';
+import { PaceDetails } from '../pages/PaceDetails';
+import { RaceDetails } from '../pages/RaceDetails';
+import { Horse } from '../pages/Horse';
 
 export const paths = {
   login: '/login',
@@ -19,6 +24,10 @@ export const paths = {
   colorDetails: '/color/:uuid',
   pace: '/pace',
   paceDetails: '/pace/:uuid',
+  race: '/race',
+  raceDetails: '/race/:uuid',
+
+  horse: '/horse',
 };
 
 export function Routes() {
@@ -48,32 +57,47 @@ export function Routes() {
       path: paths.pace,
       element: <Pace />,
     },
+    {
+      path: paths.paceDetails,
+      element: <PaceDetails />,
+    },
+    {
+      path: paths.race,
+      element: <Race />,
+    },
+    {
+      path: paths.raceDetails,
+      element: <RaceDetails />,
+    },
+    { path: paths.horse, element: <Horse /> },
   ];
 
   return (
     <BrowserRouter>
       <RoutesWrapper>
-        {isAuthenticated
-          ? appRoutes.map((route) => (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={
-                  <div className='content'>
-                    <SidebarMenu />
-
-                    {route.element}
-                  </div>
-                }
-              />
-            ))
-          : authRoutes.map((route) => (
+        {isAuthenticated ? (
+          <Route
+            path='/'
+            element={
+              <div className='content'>
+                <SidebarMenu />
+                <Outlet />
+              </div>
+            }
+          >
+            {appRoutes.map((route) => (
               <Route
                 key={route.path}
                 path={route.path}
                 element={route.element}
               />
             ))}
+          </Route>
+        ) : (
+          authRoutes.map((route) => (
+            <Route key={route.path} path={route.path} element={route.element} />
+          ))
+        )}
       </RoutesWrapper>
     </BrowserRouter>
   );
