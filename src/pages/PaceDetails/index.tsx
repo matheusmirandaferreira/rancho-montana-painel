@@ -20,7 +20,7 @@ import {
   UpdatePaceResponse,
 } from '../../libs/pace';
 
-import * as S from './styles';
+import { PageContainer } from '../../components/PageContainer';
 
 export function PaceDetails() {
   const { uuid } = useParams();
@@ -62,7 +62,7 @@ export function PaceDetails() {
   }
 
   return (
-    <S.Container>
+    <PageContainer>
       <PageHeader
         title='Detalhes do andamento'
         // description='Gerencie as raçaes que serão vinculadas aos cavalos.'
@@ -107,6 +107,6 @@ export function PaceDetails() {
           errorMessage={mutation.error?.response?.data.message}
         />
       </Modal>
-    </S.Container>
+    </PageContainer>
   );
 }

@@ -20,7 +20,7 @@ import {
   UpdateColorResponse,
 } from '../../libs/color';
 
-import * as S from './styles';
+import { PageContainer } from '../../components/PageContainer';
 
 export function ColorDetails() {
   const { uuid } = useParams();
@@ -64,7 +64,7 @@ export function ColorDetails() {
   }
 
   return (
-    <S.Container>
+    <PageContainer>
       <PageHeader
         title='Detalhes da cor'
         // description='Gerencie as cores que serão vinculadas aos cavalos.'
@@ -106,6 +106,6 @@ export function ColorDetails() {
           errorMessage={mutation.error?.response?.data.message}
         />
       </Modal>
-    </S.Container>
+    </PageContainer>
   );
 }

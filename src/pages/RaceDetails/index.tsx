@@ -20,7 +20,7 @@ import {
   UpdateRaceResponse,
 } from '../../libs/race';
 
-import * as S from './styles';
+import { PageContainer } from '../../components/PageContainer';
 
 export function RaceDetails() {
   const { uuid } = useParams();
@@ -62,7 +62,7 @@ export function RaceDetails() {
   }
 
   return (
-    <S.Container>
+    <PageContainer>
       <PageHeader
         title='Detalhes da raça'
         // description='Gerencie as raçaes que serão vinculadas aos cavalos.'
@@ -104,6 +104,6 @@ export function RaceDetails() {
           errorMessage={mutation.error?.response?.data.message}
         />
       </Modal>
-    </S.Container>
+    </PageContainer>
   );
 }
