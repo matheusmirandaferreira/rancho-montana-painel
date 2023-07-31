@@ -12,7 +12,8 @@ export const Container = styled.div`
       font-size: 0.875rem;
     }
 
-    input {
+    input,
+    select {
       width: 100%;
 
       height: 38px;

@@ -43,6 +43,10 @@ export const Container = styled.div`
 
     .modal-body {
       padding: 1rem;
+
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
 
     .modal-footer {

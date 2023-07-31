@@ -1,10 +1,10 @@
 import { api } from './api';
 import {
-  HorseListProps,
   GetHorseDetailsResponse,
   GetHorsesResponse,
   UpdateHorseResponse,
   CreateHorseParams,
+  UpdateHorseParams,
 } from '../libs/horse';
 
 export async function getHorses() {
@@ -18,7 +18,7 @@ export async function getHorseDetails(uuid?: string) {
   return data;
 }
 
-export async function updateHorse(params: CreateHorseParams) {
+export async function updateHorse(params: UpdateHorseParams) {
   const { data } = await api.put<UpdateHorseResponse>(
     `/api/horse/${params.uuidhorse}`,
     params
@@ -27,8 +27,8 @@ export async function updateHorse(params: CreateHorseParams) {
   return data;
 }
 
-export async function createHorse(nmhorse: string) {
-  const { data } = await api.post('/api/horse', { nmhorse });
+export async function createHorse(params: CreateHorseParams) {
+  const { data } = await api.post('/api/horse', params);
 
   return data;
 }

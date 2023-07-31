@@ -28,6 +28,7 @@ export const paths = {
   raceDetails: '/race/:uuid',
 
   horse: '/horse',
+  horseDetails: '/horse/:uuid',
 };
 
 export function Routes() {

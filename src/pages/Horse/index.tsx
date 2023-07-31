@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Fragment, useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
 import { AddOutlined } from '@mui/icons-material';
 
 import { Table } from '../../components/Table';
@@ -16,22 +16,35 @@ import { PageContainer } from '../../components/PageContainer';
 import { paths } from '../../routes';
 import { createHorse, getHorses } from '../../services/horse';
 import {
-  HorseListProps,
   CreateHorseResponse,
   GetHorsesResponse,
+  CreateHorseParams,
 } from '../../libs/horse';
+import { getColors } from '../../services/color';
+import { getRaces } from '../../services/race';
+import { getPaces } from '../../services/pace';
+import { getCategories } from '../../services/category';
 
 export function Horse() {
   const [isOpen, setIsOpen] = useState(false);
 
   const { data, error, isLoading, ...query } = useQuery<GetHorsesResponse, any>(
     {
-      queryKey: ['GET_COLORS'],
+      queryKey: ['GET_HORSES'],
       queryFn: getHorses,
     }
   );
 
-  const mutation = useMutation<CreateHorseResponse, any, string>({
+  const [colors, races, paces, categories] = useQueries({
+    queries: [
+      { queryKey: ['options', 1], queryFn: getColors },
+      { queryKey: ['options', 2], queryFn: getRaces },
+      { queryKey: ['options', 3], queryFn: getPaces },
+      { queryKey: ['options', 4], queryFn: getCategories },
+    ],
+  });
+
+  const mutation = useMutation<CreateHorseResponse, any, CreateHorseParams>({
     mutationFn: createHorse,
     onSuccess() {
       handleModal();
@@ -39,17 +52,19 @@ export function Horse() {
     },
   });
 
-  const { control, handleSubmit } = useForm<Pick<HorseListProps, 'nmhorse'>>();
+  const { control, handleSubmit } = useForm<CreateHorseParams>();
 
   const handleModal = () => {
     setIsOpen(!isOpen);
   };
 
   const onSubmit = handleSubmit((data) => {
-    mutation.mutate(data.nmhorse);
+    console.log('data', data);
+
+    mutation.mutate(data);
   });
 
-  if (isLoading) {
+  if (isLoading || colors.isLoading || races.isLoading || paces.isLoading) {
     return <Loader.Page />;
   }
 
@@ -64,8 +79,10 @@ export function Horse() {
           {item.nmhorse}
         </Link>
       </td>
-      <td>{item.horse_permalink}</td>
-      <td>{new Date(item.created_at).toLocaleString()}</td>
+      <td>{item.color.nmcolor}</td>
+      <td>{item.race.nmrace}</td>
+      <td>{item.pace.nmpace}</td>
+      <td>{item.birthdate.split('-').reverse().join('/')}</td>
     </Fragment>
   ));
 
@@ -79,12 +96,18 @@ export function Horse() {
       </PageHeader>
 
       <Table
-        headerColumns={['Nome', 'Código', 'Data de criação']}
+        headerColumns={[
+          'Nome',
+          'Cor',
+          'Raça',
+          'Andamento',
+          'Data de nascimento',
+        ]}
         rows={rows}
       />
 
       <Modal
-        title='Adicinoar cor'
+        title='Adicinoar cavalo'
         onClose={handleModal}
         onConfirm={onSubmit}
         isOpen={isOpen}
@@ -93,8 +116,89 @@ export function Horse() {
         <Input
           control={control}
           name='nmhorse'
-          label='Nome da cor'
+          label='Nome do cavalo'
           placeholder='Nome'
+          rules={{ required: 'Campo obrigatório!' }}
+          errorMessage={mutation.error?.response?.data.message}
+        />
+
+        <Input
+          control={control}
+          name='uuidcolor'
+          label='Selecione uma cor'
+          placeholder='Cor'
+          rules={{ required: 'Campo obrigatório!' }}
+          errorMessage={mutation.error?.response?.data.message}
+          type='select'
+          options={colors.data?.data.map((item) =>
+            Object({ label: item.nmcolor, value: item.uuidcolor })
+          )}
+        />
+        <Input
+          control={control}
+          name='uuidpace'
+          label='Andamento'
+          placeholder='Selecione o andamento'
+          rules={{ required: 'Campo obrigatório!' }}
+          errorMessage={mutation.error?.response?.data.message}
+          type='select'
+          options={paces.data?.data.map((item) =>
+            Object({ label: item.nmpace, value: item.uuidpace })
+          )}
+        />
+        <Input
+          control={control}
+          name='uuidrace'
+          label='Raça'
+          placeholder='Selecione a raça'
+          rules={{ required: 'Campo obrigatório!' }}
+          errorMessage={mutation.error?.response?.data.message}
+          type='select'
+          options={races.data?.data.map((item) =>
+            Object({ label: item.nmrace, value: item.uuidrace })
+          )}
+        />
+
+        <Input
+          control={control}
+          name='uuidcategory'
+          label='Categoria'
+          placeholder='Selecione uma categoria'
+          rules={{ required: 'Campo obrigatório!' }}
+          errorMessage={mutation.error?.response?.data.message}
+          type='select'
+          options={categories.data?.data.map((item) =>
+            Object({ label: item.nmcategory, value: item.uuidcategory })
+          )}
+        />
+
+        <Input
+          control={control}
+          name='birthdate'
+          label='Data de nascimento'
+          type='date'
+          rules={{ required: 'Campo obrigatório!' }}
+          errorMessage={mutation.error?.response?.data.message}
+        />
+
+        <Input
+          type='select'
+          control={control}
+          name='gender'
+          label='Gênero'
+          placeholder='Selecione o gênero'
+          rules={{ required: 'Campo obrigatório!' }}
+          errorMessage={mutation.error?.response?.data.message}
+          options={[
+            { label: 'M', value: 'M' },
+            { label: 'F', value: 'F' },
+          ]}
+        />
+        <Input
+          control={control}
+          name='description'
+          label='Descrição do cavalo'
+          placeholder='Descrição'
           rules={{ required: 'Campo obrigatório!' }}
           errorMessage={mutation.error?.response?.data.message}
         />

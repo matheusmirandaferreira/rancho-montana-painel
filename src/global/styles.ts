@@ -20,7 +20,9 @@ export const GlobalStyles = createGlobalStyle`
       font: normal 500 14px/16px 'Montserrat', sans-serif;
     }
 
-    input {
+    input,
+    select,
+    textarea {
       font: normal 600 14px/16px 'Montserrat', sans-serif;
 
       &::placeholder {
