@@ -18,7 +18,8 @@ export type Colors =
   | 'gray100'
   | 'background'
   | 'white'
-  | 'red';
+  | 'red'
+  | 'secondary';
 
 export type OptionProps = {
   label: string;

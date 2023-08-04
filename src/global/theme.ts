@@ -2,6 +2,8 @@ export const theme = {
   primary700: '#333D29',
   primary500: '#656D4A',
 
+  secondary: '#33293d',
+
   text: '#3f3f3f',
 
   gray700: '#777777',

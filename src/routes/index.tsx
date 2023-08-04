@@ -16,6 +16,7 @@ import { Race } from '../pages/Race';
 import { PaceDetails } from '../pages/PaceDetails';
 import { RaceDetails } from '../pages/RaceDetails';
 import { Horse } from '../pages/Horse';
+import { HorseDetails } from '../pages/HorseDetails';
 
 export const paths = {
   login: '/login',
@@ -71,6 +72,7 @@ export function Routes() {
       element: <RaceDetails />,
     },
     { path: paths.horse, element: <Horse /> },
+    { path: paths.horseDetails, element: <HorseDetails /> },
   ];
 
   return (

@@ -42,7 +42,7 @@ export function SidebarMenu() {
         <ul>
           <li>
             <a href={paths.horse}>
-              <svg
+              {/* <svg
                 width='24'
                 height='24'
                 viewBox='0 0 24 24'
@@ -67,31 +67,31 @@ export function SidebarMenu() {
                     />
                   </clipPath>
                 </defs>
-              </svg>
+              </svg> */}
               <span>Cavalos</span>
             </a>
           </li>
           <li>
             <a href={paths.color}>
-              <FormatPaintOutlined />
+              {/* <FormatPaintOutlined /> */}
               <span>Cor</span>
             </a>
           </li>
           <li>
             <a href={paths.race}>
-              <PetsOutlined />
+              {/* <PetsOutlined /> */}
               <span>Raça</span>
             </a>
           </li>
           <li>
             <a href={paths.pace}>
-              <EqualizerOutlined />
+              {/* <EqualizerOutlined /> */}
               <span>Andamento</span>
             </a>
           </li>
           <li>
             <a href='#'>
-              <PeopleOutline />
+              {/* <PeopleOutline /> */}
               <span>Usuários</span>
             </a>
           </li>

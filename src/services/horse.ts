@@ -18,7 +18,7 @@ export async function getHorseDetails(uuid?: string) {
   return data;
 }
 
-export async function updateHorse(params: UpdateHorseParams) {
+export async function updateHorse(params: Partial<UpdateHorseParams>) {
   const { data } = await api.put<UpdateHorseResponse>(
     `/api/horse/${params.uuidhorse}`,
     params
