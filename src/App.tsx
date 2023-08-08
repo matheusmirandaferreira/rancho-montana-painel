@@ -5,6 +5,8 @@ import { AuthProvider } from './hooks/auth';
 import { Routes } from './routes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 export function App() {
   const queryClient = new QueryClient();
 

@@ -30,6 +30,13 @@ export const GlobalStyles = createGlobalStyle`
       }
     }
 
+    ol,
+    ul {
+      padding-left: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
     .error-message {
       color: ${theme.red};
     }
@@ -40,6 +47,11 @@ export const GlobalStyles = createGlobalStyle`
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
+
+      .image {
+        width: fit-content;
+        height: auto;
+      }
     }
 
     .content {

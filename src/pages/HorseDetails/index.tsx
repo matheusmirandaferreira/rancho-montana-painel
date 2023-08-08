@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { Alert } from 'reactstrap';
+import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { AddOutlined, EditOutlined } from '@mui/icons-material';
-import { useForm } from 'react-hook-form';
 import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
 
 import { Info } from '../../components/Info';
@@ -12,27 +13,30 @@ import { Loader } from '../../components/Loader';
 import { CardBox } from '../../components/CardBox';
 import { PageHeader } from '../../components/PageHeader';
 import { ErrorMessage } from '../../components/ErrorMessage';
+import { PageContainer } from '../../components/PageContainer';
 
-import { getHorseDetails, updateHorse } from '../../services/horse';
 import {
   HorseListProps,
   GetHorseDetailsResponse,
   UpdateHorseResponse,
   UpdateHorseParams,
+  AddImageHorseParams,
 } from '../../libs/horse';
+import { ResponseProps } from '../../libs/common';
 
-import { PageContainer } from '../../components/PageContainer';
-import { getCategories } from '../../services/category';
 import { getPaces } from '../../services/pace';
 import { getRaces } from '../../services/race';
 import { getColors } from '../../services/color';
+import { getCategories } from '../../services/category';
+import { addImage, getHorseDetails, updateHorse } from '../../services/horse';
 
 export function HorseDetails() {
   const { uuid } = useParams();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenForUpload, setIsOpenForUpload] = useState(false);
 
-  const mutation = useMutation<
+  const mutationForUpdate = useMutation<
     UpdateHorseResponse,
     any,
     Partial<UpdateHorseParams>
@@ -40,6 +44,18 @@ export function HorseDetails() {
     mutationFn: updateHorse,
     onSuccess() {
       handleModal();
+      query.refetch();
+    },
+  });
+
+  const mutationImage = useMutation<
+    ResponseProps<null>,
+    any,
+    AddImageHorseParams
+  >({
+    mutationFn: addImage,
+    onSuccess() {
+      handleUploadModal();
       query.refetch();
     },
   });
@@ -58,19 +74,29 @@ export function HorseDetails() {
     ],
   });
 
-  const { control, handleSubmit } =
-    useForm<Pick<HorseListProps, 'nmhorse' | 'uuidhorse'>>();
+  const { control, handleSubmit } = useForm<
+    Pick<HorseListProps, 'nmhorse' | 'uuidhorse'> & { image: File }
+  >();
 
   const handleModal = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleUploadModal = () => {
+    setIsOpenForUpload(!isOpenForUpload);
+  };
+
   const onSubmit = handleSubmit((data) => {
-    console.log('data', data);
-    mutation.mutate({
+    mutationForUpdate.mutate({
       ...data,
       uuidhorse: uuid,
-      uuidcategory: '11b2bf52-6e47-405d-a05e-cf09789f4876',
+    });
+  });
+
+  const onSubmitImage = handleSubmit((data) => {
+    mutationImage.mutate({
+      uuidhorse: uuid || '',
+      image: data.image,
     });
   });
 
@@ -94,7 +120,7 @@ export function HorseDetails() {
         // description='Gerencie as raçaes que serão vinculadas aos cavalos.'
       >
         <div className='buttons'>
-          <Button color='secondary'>
+          <Button color='secondary' onClick={handleUploadModal}>
             <AddOutlined />
             <span>Adicionar imagem</span>
           </Button>
@@ -138,14 +164,44 @@ export function HorseDetails() {
             value={new Date(query.data.data.updated_at).toLocaleString()}
           />
         </div>
+        {query.data.data.image && (
+          <div className='row'>
+            <img className='image' src={query.data.data.image} alt='' />
+          </div>
+        )}
       </CardBox>
+
+      <Modal
+        title='Adicionar imagem'
+        onClose={handleUploadModal}
+        onConfirm={onSubmitImage}
+        isOpen={isOpenForUpload}
+        isLoading={mutationImage.isLoading}
+      >
+        {mutationImage.error && (
+          <Alert color='danger'>
+            {mutationImage.error.response.message ||
+              'Houve um erro ao adicionar essa imagem'}
+          </Alert>
+        )}
+        {/* <RSInput type='file' ref={register('image').ref} /> */}
+        <Input
+          control={control}
+          name='image'
+          label='Adicionar imagem'
+          placeholder='Imagem'
+          rules={{ required: 'Campo obrigatório!' }}
+          errorMessage={mutationForUpdate.error?.response?.data.errors?.image}
+          type='file'
+        />
+      </Modal>
 
       <Modal
         title='Editar andamento'
         onClose={handleModal}
         onConfirm={onSubmit}
         isOpen={isOpen}
-        isLoading={mutation.isLoading}
+        isLoading={mutationForUpdate.isLoading}
       >
         <Input
           control={control}
@@ -153,7 +209,7 @@ export function HorseDetails() {
           label='Nome do cavalo'
           placeholder='Nome'
           rules={{ required: 'Campo obrigatório!' }}
-          errorMessage={mutation.error?.response?.data.errors?.nmhorse}
+          errorMessage={mutationForUpdate.error?.response?.data.errors?.nmhorse}
           defaultValue={query.data.data.nmhorse}
         />
 
@@ -164,7 +220,7 @@ export function HorseDetails() {
           label='Selecione uma cor'
           placeholder='Cor'
           rules={{ required: 'Campo obrigatório!' }}
-          errorMessage={mutation.error?.response?.data.errors?.color}
+          errorMessage={mutationForUpdate.error?.response?.data.errors?.color}
           type='select'
           options={colors.data?.data.map((item) =>
             Object({ label: item.nmcolor, value: item.uuidcolor })
@@ -177,7 +233,7 @@ export function HorseDetails() {
           label='Andamento'
           placeholder='Selecione o andamento'
           rules={{ required: 'Campo obrigatório!' }}
-          errorMessage={mutation.error?.response?.data.errors?.pace}
+          errorMessage={mutationForUpdate.error?.response?.data.errors?.pace}
           type='select'
           options={paces.data?.data.map((item) =>
             Object({ label: item.nmpace, value: item.uuidpace })
@@ -190,7 +246,7 @@ export function HorseDetails() {
           label='Raça'
           placeholder='Selecione a raça'
           rules={{ required: 'Campo obrigatório!' }}
-          errorMessage={mutation.error?.response?.data.errors?.race}
+          errorMessage={mutationForUpdate.error?.response?.data.errors?.race}
           type='select'
           options={races.data?.data.map((item) =>
             Object({ label: item.nmrace, value: item.uuidrace })
@@ -204,7 +260,9 @@ export function HorseDetails() {
           label='Categoria'
           placeholder='Selecione uma categoria'
           rules={{ required: 'Campo obrigatório!' }}
-          errorMessage={mutation.error?.response?.data.errors?.category}
+          errorMessage={
+            mutationForUpdate.error?.response?.data.errors?.category
+          }
           type='select'
           options={categories.data?.data.map((item) =>
             Object({ label: item.nmcategory, value: item.uuidcategory })
@@ -218,7 +276,9 @@ export function HorseDetails() {
           label='Data de nascimento'
           type='date'
           rules={{ required: 'Campo obrigatório!' }}
-          errorMessage={mutation.error?.response?.data.errors?.birthdate}
+          errorMessage={
+            mutationForUpdate.error?.response?.data.errors?.birthdate
+          }
         />
 
         <Input
@@ -229,7 +289,7 @@ export function HorseDetails() {
           label='Gênero'
           placeholder='Selecione o gênero'
           rules={{ required: 'Campo obrigatório!' }}
-          errorMessage={mutation.error?.response?.data.errors?.gender}
+          errorMessage={mutationForUpdate.error?.response?.data.errors?.gender}
           options={[
             { label: 'M', value: 'M' },
             { label: 'F', value: 'F' },
@@ -242,7 +302,9 @@ export function HorseDetails() {
           label='Descrição do cavalo'
           placeholder='Descrição'
           rules={{ required: 'Campo obrigatório!' }}
-          errorMessage={mutation.error?.response?.data.errors?.description}
+          errorMessage={
+            mutationForUpdate.error?.response?.data.errors?.description
+          }
         />
       </Modal>
     </PageContainer>

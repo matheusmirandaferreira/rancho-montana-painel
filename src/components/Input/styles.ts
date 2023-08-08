@@ -17,7 +17,7 @@ export const Container = styled.div`
       width: 100%;
 
       height: 38px;
-      padding: 0 0.875rem;
+      padding: 0.5rem 0.875rem;
       border-radius: 0.25rem;
       border: 1px solid ${theme.gray500};
 

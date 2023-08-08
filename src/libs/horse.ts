@@ -16,7 +16,7 @@ export type HorseListProps = {
   pace: PaceListProps;
   created_at: string;
   updated_at: string;
-  image?: string[];
+  image?: string;
 };
 
 export type CreateHorseParams = {
@@ -42,6 +42,11 @@ export type UpdateHorseParams = {
   uuidcategory?: string;
   description?: string;
   gender?: 'M' | 'F';
+};
+
+export type AddImageHorseParams = {
+  uuidhorse: string;
+  image: File;
 };
 
 export type GetHorsesResponse = ResponseProps<HorseListProps[]>;

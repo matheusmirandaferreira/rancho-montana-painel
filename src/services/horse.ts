@@ -5,7 +5,9 @@ import {
   UpdateHorseResponse,
   CreateHorseParams,
   UpdateHorseParams,
+  AddImageHorseParams,
 } from '../libs/horse';
+import { ResponseProps } from '../libs/common';
 
 export async function getHorses() {
   const { data } = await api.get<GetHorsesResponse>('/api/horse');
@@ -29,6 +31,23 @@ export async function updateHorse(params: Partial<UpdateHorseParams>) {
 
 export async function createHorse(params: CreateHorseParams) {
   const { data } = await api.post('/api/horse', params);
+
+  return data;
+}
+
+export async function addImage(params: AddImageHorseParams) {
+  const formData = new FormData();
+  formData.append('image', params.image);
+
+  const { data } = await api.post<ResponseProps<null>>(
+    `/api/horse/${params.uuidhorse}/image`,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
 
   return data;
 }

@@ -1,4 +1,5 @@
 import { InputHTMLAttributes } from 'react';
+import { Input as RSInput } from 'reactstrap';
 import { Control, RegisterOptions, useController } from 'react-hook-form';
 
 import * as S from './styles';
@@ -29,6 +30,25 @@ export function Input(props: Props) {
     field,
     fieldState: { error },
   } = useController({ name, control, defaultValue, rules });
+
+  if (rest.type === 'file') {
+    return (
+      <S.Container>
+        <label htmlFor={name}>{label}</label>
+
+        <RSInput
+          type='file'
+          // {...field}
+          value={field.value?.filename || ''}
+          onChange={(event) => field.onChange(event.target?.files?.[0])}
+          id={name}
+        />
+        {(error?.message || errorMessage) && (
+          <p className='error-message'>{error?.message || errorMessage}</p>
+        )}
+      </S.Container>
+    );
+  }
 
   if (rest.type === 'select' && options)
     return (
