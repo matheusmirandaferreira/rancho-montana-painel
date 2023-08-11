@@ -1,9 +1,9 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 import * as S from './styles';
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   label: string;
-  value: string | number;
+  value: ReactNode;
 };
 
 export function Info({ label, value, ...rest }: Props) {

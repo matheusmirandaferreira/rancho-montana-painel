@@ -154,19 +154,29 @@ export function HorseDetails() {
         </div>
         <div className='row'>
           <Info
-            style={{ flex: 0.25 }}
             label='Data de criação'
             value={new Date(query.data.data.created_at).toLocaleString()}
           />
           <Info
-            style={{ flex: 0.78 }}
             label='Data de atualização'
             value={new Date(query.data.data.updated_at).toLocaleString()}
           />
+          <div style={{ flex: 1 }} />
+          <div style={{ flex: 1 }} />
         </div>
         {query.data.data.image && (
           <div className='row'>
-            <img className='image' src={query.data.data.image} alt='' />
+            <Info
+              label='Imagem'
+              value={
+                <img
+                  className='image'
+                  src={query.data.data.image}
+                  width={200}
+                  height={200}
+                />
+              }
+            />
           </div>
         )}
       </CardBox>

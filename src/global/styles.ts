@@ -47,11 +47,6 @@ export const GlobalStyles = createGlobalStyle`
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-
-      .image {
-        width: fit-content;
-        height: auto;
-      }
     }
 
     .content {
