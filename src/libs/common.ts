@@ -25,3 +25,11 @@ export type OptionProps = {
   label: string;
   value: string;
 };
+
+export type LoaderProps = {
+  height?: string | number;
+  width?: string | number;
+  color?: string;
+  ariaLabel?: string;
+  visible?: boolean;
+};

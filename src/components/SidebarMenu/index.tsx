@@ -1,28 +1,10 @@
-import { useState } from 'react';
-
 import { paths } from '../../routes';
 
 import * as S from './styles';
 
 export function SidebarMenu() {
-  const [open, setOpen] = useState(
-    localStorage.getItem('menuIsOpen') === 'open'
-  );
-
-  const togle = () => {
-    const isOpen = localStorage.getItem('menuIsOpen');
-
-    if (isOpen === 'open') {
-      setOpen(false);
-      localStorage.setItem('menuIsOpen', 'close');
-    } else {
-      setOpen(true);
-      localStorage.setItem('menuIsOpen', 'open');
-    }
-  };
-
   return (
-    <S.Container open={open}>
+    <S.Container open={true}>
       <nav>
         <div className='title'>
           <ul>
@@ -58,7 +40,7 @@ export function SidebarMenu() {
             </a>
           </li>
           <li>
-            <a href='#'>
+            <a href={paths.user}>
               {/* <PeopleOutline /> */}
               <span>Usuários</span>
             </a>
