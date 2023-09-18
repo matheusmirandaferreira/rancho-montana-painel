@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { paths } from '../../routes';
 
 import * as S from './styles';
@@ -9,41 +10,41 @@ export function SidebarMenu() {
         <div className='title'>
           <ul>
             <li>
-              <a href='#'>
+              <Link to='#'>
                 <span>Menu</span>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
         <ul>
           <li>
-            <a href={paths.horse}>
+            <Link to={paths.horse}>
               <span>Cavalos</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href={paths.color}>
+            <Link to={paths.color}>
               {/* <FormatPaintOutlined /> */}
               <span>Cor</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href={paths.race}>
+            <Link to={paths.race}>
               {/* <PetsOutlined /> */}
               <span>Raça</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href={paths.pace}>
+            <Link to={paths.pace}>
               {/* <EqualizerOutlined /> */}
               <span>Andamento</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href={paths.user}>
+            <Link to={paths.user}>
               {/* <PeopleOutline /> */}
               <span>Usuários</span>
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>

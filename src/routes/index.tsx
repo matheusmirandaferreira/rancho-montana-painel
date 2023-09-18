@@ -18,12 +18,14 @@ import { RaceDetails } from '../pages/RaceDetails';
 import { Horse } from '../pages/Horse';
 import { HorseDetails } from '../pages/HorseDetails';
 import { User } from '../pages/User';
+import { UserDetails } from '../pages/UserDetails';
 
 export const paths = {
   login: '/login',
   home: '/',
-  user: '/users',
-  userDetails: '/users/:uuid',
+
+  user: '/user',
+  userDetails: '/user/:uuid',
 
   color: '/color',
   colorDetails: '/color/:uuid',
@@ -80,7 +82,7 @@ export function Routes() {
     { path: paths.horse, element: <Horse /> },
     { path: paths.horseDetails, element: <HorseDetails /> },
     { path: paths.user, element: <User /> },
-    // { path: paths.userDetails, element: <UserDetails /> },
+    { path: paths.userDetails, element: <UserDetails /> },
   ];
 
   return (

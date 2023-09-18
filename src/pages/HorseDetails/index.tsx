@@ -79,7 +79,7 @@ export function HorseDetails() {
   >();
 
   const handleModal = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   const handleUploadModal = () => {

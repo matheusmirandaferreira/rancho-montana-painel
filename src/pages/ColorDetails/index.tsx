@@ -48,7 +48,7 @@ export function ColorDetails() {
     useForm<Pick<ColorListProps, 'nmcolor' | 'uuidcolor'>>();
 
   const handleModal = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   const onSubmit = handleSubmit((data) => {

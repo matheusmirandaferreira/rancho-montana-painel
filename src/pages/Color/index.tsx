@@ -42,7 +42,7 @@ export function Color() {
   const { control, handleSubmit } = useForm<Pick<ColorListProps, 'nmcolor'>>();
 
   const handleModal = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   const onSubmit = handleSubmit((data) => {

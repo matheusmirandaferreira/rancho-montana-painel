@@ -55,7 +55,7 @@ export function Horse() {
   const { control, handleSubmit } = useForm<CreateHorseParams>();
 
   const handleModal = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   const onSubmit = handleSubmit((data) => {

@@ -40,7 +40,7 @@ export function Race() {
   const { control, handleSubmit } = useForm<Pick<RaceListProps, 'nmrace'>>();
 
   const handleModal = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   const onSubmit = handleSubmit((data) => {

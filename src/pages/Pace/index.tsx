@@ -40,7 +40,7 @@ export function Pace() {
   const { control, handleSubmit } = useForm<Pick<PaceListProps, 'nmpace'>>();
 
   const handleModal = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   const onSubmit = handleSubmit((data) => {

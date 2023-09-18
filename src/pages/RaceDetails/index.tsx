@@ -46,7 +46,7 @@ export function RaceDetails() {
     useForm<Pick<RaceListProps, 'nmrace' | 'uuidrace'>>();
 
   const handleModal = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   const onSubmit = handleSubmit((data) => {
