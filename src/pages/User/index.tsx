@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react';
-import { AddOutlined } from '@mui/icons-material';
+import { AddOutlined, Delete } from '@mui/icons-material';
 
 import { Button } from '../../components/Button';
 import { PageHeader } from '../../components/PageHeader';
@@ -63,6 +63,7 @@ export function User() {
       </td>
       <td>{item.email}</td>
       <td>{new Date(item.created_at).toLocaleString()}</td>
+      <td><Delete /></td>
     </Fragment>
   ));
 

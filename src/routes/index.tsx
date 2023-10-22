@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import { Login } from '../pages/Login';
 import { useAuth } from '../hooks/auth';
-import { Home } from '../pages/Home';
+// import { Home } from '../pages/Home';
 import { Color } from '../pages/Color';
 import { SidebarMenu } from '../components/SidebarMenu';
 import { ColorDetails } from '../pages/ColorDetails';
@@ -53,7 +53,7 @@ export function Routes() {
   const appRoutes: RouteProps[] = [
     {
       path: paths.home,
-      element: <Home />,
+      element: <Horse />,
     },
     {
       path: paths.color,

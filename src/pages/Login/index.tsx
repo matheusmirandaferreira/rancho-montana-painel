@@ -30,7 +30,7 @@ export function Login() {
         onLoginSuccess(res.data);
         window.location.replace(paths.home);
       } else {
-        setErrorMessage(res.message);
+        setErrorMessage(res.message || 'Houve um erro ao efetuar login');
       }
     } catch (err: any) {
       console.log(err);
