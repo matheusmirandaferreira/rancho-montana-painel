@@ -102,7 +102,6 @@ export function Horse() {
           'Raça',
           'Andamento',
           'Data de nascimento',
-          '',
         ]}
         rows={rows}
       />

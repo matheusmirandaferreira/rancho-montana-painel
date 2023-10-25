@@ -63,7 +63,9 @@ export function User() {
       </td>
       <td>{item.email}</td>
       <td>{new Date(item.created_at).toLocaleString()}</td>
-      <td><Delete /></td>
+      <td>
+        <Delete />
+      </td>
     </Fragment>
   ));
 
@@ -80,7 +82,7 @@ export function User() {
       </PageHeader>
 
       <Table
-        headerColumns={['Nome', 'E-mail', 'Data de criação']}
+        headerColumns={['Nome', 'E-mail', 'Data de criação', '']}
         rows={rows}
       />
 
