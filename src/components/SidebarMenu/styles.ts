@@ -31,6 +31,24 @@ export const Container = styled.aside<ContainerProps>`
       .title {
         position: absolute;
         top: 2rem;
+
+        a {
+          text-decoration: none;
+          color: ${theme.white};
+
+          gap: 0.5rem;
+          display: flex;
+          align-items: center;
+        }
+
+        @media (max-width: 500px) {
+          position: relative;
+          top: initial;
+
+          a {
+            margin-right: auto;
+          }
+        }
       }
     }
 
@@ -50,15 +68,33 @@ export const Container = styled.aside<ContainerProps>`
           text-decoration: none;
           color: ${theme.white};
 
-          span {
-            display: ${open ? 'initial' : 'none'};
-          }
-
           &:hover {
             opacity: 0.7;
           }
         }
       }
+
+      @media (max-width: 500px) {
+        display: ${open ? 'flex' : 'none'};
+        position: absolute;
+
+        background-color: ${theme.primary700};
+        padding: 1rem;
+        border-bottom-left-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+        left: 2px;
+        top: 100%;
+        z-index: 2;
+        box-shadow: 0 4px 6px ${theme.secondary};
+      }
+    }
+
+    @media (max-width: 500px) {
+      width: 100%;
+      height: 50px;
+      position: relative;
+
+      justify-content: flex-start;
     }
   `}
 `;

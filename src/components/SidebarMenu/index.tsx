@@ -2,21 +2,24 @@ import { Link } from 'react-router-dom';
 import { paths } from '../../routes';
 
 import * as S from './styles';
+import { useState } from 'react';
+import { Menu } from '@mui/icons-material';
 
 export function SidebarMenu() {
+  const [isOpen, setIsOpen] = useState(window.innerWidth > 500);
+
+  const handleOpen = () => setIsOpen((prev) => !prev);
+
   return (
-    <S.Container open={true}>
+    <S.Container open={isOpen}>
       <nav>
         <div className='title'>
-          <ul>
-            <li>
-              <Link to='#'>
-                <span>Menu</span>
-              </Link>
-            </li>
-          </ul>
+          <Link to='#' onClick={handleOpen}>
+            <Menu />
+            <span>Menu</span>
+          </Link>
         </div>
-        <ul>
+        <ul onClick={handleOpen}>
           <li>
             <Link to={paths.horse}>
               <span>Cavalos</span>

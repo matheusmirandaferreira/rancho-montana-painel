@@ -11,6 +11,7 @@ export const Container = styled.header`
     p {
       margin-bottom: 0.5rem;
       color: ${theme.text};
+      max-width: 95vw;
     }
 
     button {
@@ -21,6 +22,11 @@ export const Container = styled.header`
       display: flex;
       align-items: center;
       gap: 0.5rem;
+    }
+
+    @media (max-width: 500px) {
+      flex-direction: column;
+      align-items: flex-start;
     }
   `}
 `;

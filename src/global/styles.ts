@@ -57,6 +57,14 @@ export const GlobalStyles = createGlobalStyle`
         margin: 0 auto;
         max-width: 1280px;
         padding: 2rem 1rem;
+
+        @media (max-width: 500px) {
+          padding: 1rem;
+        }
+      }
+
+      @media (max-width: 500px) {
+        flex-direction: column;
       }
     }
   `}

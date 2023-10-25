@@ -42,5 +42,11 @@ export const Container = styled.table`
         box-shadow: 0 0 0.124rem ${theme.primary700};
       }
     }
+
+    @media (max-width: 500px) {
+      display: block;
+      overflow: auto;
+      max-width: 90vw;
+    }
   `}
 `;
